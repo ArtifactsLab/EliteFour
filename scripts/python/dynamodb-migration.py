@@ -1,8 +1,9 @@
 import boto3
 import csv
+import access.keys as keys
 
-ONLINE = False
-REQUEST = True
+ONLINE = True
+REQUEST = False
 
 def build_put_nature(nature, description):
     return {
@@ -39,9 +40,6 @@ def build_put_pokemon(pokemon):
         }
     }
 
-def cleanse(text):
-    return text.replace('-', '').strip()
-
 def write_batch(client, table, items, batch):
     print "batch {0} size {1}".format(batch, len(items))
     request_items = {}
@@ -70,13 +68,16 @@ def upload(client, table, csv_location, parse):
 
     write_batch(client, table, items, batch)
 
-client = boto3.client(
-    'dynamodb',
-    region_name='us-east-1',
-    aws_access_key_id='',
-    aws_secret_access_key=''
-)
+def run():
+    client = boto3.client(
+        'dynamodb',
+        region_name='us-east-1',
+        aws_access_key_id=keys.aws_access_key_id,
+        aws_secret_access_key=keys.aws_secret_access_key
+    )
 
-#upload(client, 'EliteFour-Natures', '../../../data/natures.csv', parse_nature)
+    #upload(client, 'EliteFour-Natures', '../../../data/natures.csv', parse_nature)
 
-upload(client, 'EliteFour-Pokemon', '../../../data/clean/pokemon_clean.csv', build_put_pokemon)
+    upload(client, 'EliteFour-Pokemon', '../../data/clean/pokemon_clean.csv', build_put_pokemon)
+
+run()
