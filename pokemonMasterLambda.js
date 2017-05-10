@@ -1,17 +1,5 @@
 'use strict';
 
-/**
- * This sample demonstrates a simple skill built with the Amazon Alexa Skills Kit.
- * The Intent Schema, Custom Slots, and Sample Utterances for this skill, as well as
- * testing instructions are located at http://amzn.to/1LzFrj6
- *
- * For additional samples, visit the Alexa Skills Kit Getting Started guide at
- * http://amzn.to/1LGWsLG
- */
-
-
-// --------------- Helpers that build all of the responses -----------------------
-
 function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
     return {
         outputSpeech: {
@@ -40,9 +28,6 @@ function buildResponse(sessionAttributes, speechletResponse) {
         response: speechletResponse,
     };
 }
-
-
-// --------------- Functions that control the skill's behavior -----------------------
 
 function getWelcomeResponse(callback) {
     // If we wanted to initialize the session to have some attributes we could add those here.
@@ -75,60 +60,6 @@ function createFavoriteColorAttributes(favoriteColor) {
     };
 }
 
-/**
- * Sets the color in the session and prepares the speech to reply to the user.
- */
-function setColorInSession(intent, session, callback) {
-    const cardTitle = intent.name;
-    const favoriteColorSlot = intent.slots.Color;
-    let repromptText = '';
-    let sessionAttributes = {};
-    const shouldEndSession = false;
-
-    let speechOutput = '';
-
-    if (favoriteColorSlot) {
-        const favoriteColor = favoriteColorSlot.value;
-        sessionAttributes = createFavoriteColorAttributes(favoriteColor);
-        speechOutput = `I now know your favorite color is ${favoriteColor}. You can ask me ` +
-            "your favorite color by saying, what's my favorite color?";
-        repromptText = "You can ask me your favorite color by saying, what's my favorite color?";
-    } else {
-        speechOutput = "I'm not sure what your favorite color is. Please try again.";
-        repromptText = "I'm not sure what your favorite color is. You can tell me your " +
-            'favorite color by saying, my favorite color is red';
-    }
-
-    callback(sessionAttributes,
-         buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
-}
-
-function getColorFromSession(intent, session, callback) {
-    let favoriteColor;
-    const repromptText = null;
-    const sessionAttributes = {};
-    let shouldEndSession = false;
-    let speechOutput = '';
-
-    if (session.attributes) {
-        favoriteColor = session.attributes.favoriteColor;
-    }
-
-    if (favoriteColor) {
-        speechOutput = `Your favorite color is ${favoriteColor}. Goodbye.`;
-        shouldEndSession = true;
-    } else {
-        speechOutput = "I'm not sure what your favorite color is, you can say, my favorite color " +
-            ' is red';
-    }
-
-    // Setting repromptText to null signifies that we do not want to reprompt the user.
-    // If the user does not respond or says something that is not understood, the session
-    // will end.
-    callback(sessionAttributes,
-         buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
-}
-
 function getPokemonStats(intent, callback) {
   const shouldEndSession = false;
   const cardTitle = intent.name;
@@ -153,19 +84,10 @@ function getPokemonStats(intent, callback) {
     buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
 
-
-// --------------- Events -----------------------
-
-/**
- * Called when the session starts.
- */
 function onSessionStarted(sessionStartedRequest, session) {
     console.log(`onSessionStarted requestId=${sessionStartedRequest.requestId}, sessionId=${session.sessionId}`);
 }
 
-/**
- * Called when the user launches the skill without specifying what they want.
- */
 function onLaunch(launchRequest, session, callback) {
     console.log(`onLaunch requestId=${launchRequest.requestId}, sessionId=${session.sessionId}`);
 
@@ -173,9 +95,6 @@ function onLaunch(launchRequest, session, callback) {
     getWelcomeResponse(callback);
 }
 
-/**
- * Called when the user specifies an intent for this skill.
- */
 function onIntent(intentRequest, session, callback) {
     console.log(`onIntent requestId=${intentRequest.requestId}, sessionId=${session.sessionId}`);
 
@@ -198,10 +117,6 @@ function onIntent(intentRequest, session, callback) {
     }
 }
 
-/**
- * Called when the user ends the session.
- * Is not called when the skill returns shouldEndSession=true.
- */
 function onSessionEnded(sessionEndedRequest, session) {
     console.log(`onSessionEnded requestId=${sessionEndedRequest.requestId}, sessionId=${session.sessionId}`);
     // Add cleanup logic here

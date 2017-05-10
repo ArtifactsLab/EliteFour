@@ -108,3 +108,6 @@ data/csv/
 # access
 access/
 scripts/python/access
+
+# node
+node_modules/
