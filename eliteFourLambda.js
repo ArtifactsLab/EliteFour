@@ -1,5 +1,10 @@
 'use strict';
 
+// TODO move magic strings up here :)
+// exports.message = {
+//   ...
+// }
+
 function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
     return {
         outputSpeech: {

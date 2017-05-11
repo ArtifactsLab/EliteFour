@@ -34,6 +34,7 @@ describe('EliteFour lambda', () => {
       });
     });
 
+    // TODO test the AMAZON.* intents output (pull strings from exports.message)
     it('handles AMAZON.HelpIntent', () => {
       event.request.intent.name = 'AMAZON.HelpIntent';
       lambda.handler(event, null, (err, res) => {
