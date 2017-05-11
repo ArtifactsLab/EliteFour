@@ -1,9 +1,9 @@
 import boto3
 import csv
-import access.keys as keys
+import json
 
-ONLINE = True
-REQUEST = False
+ONLINE = False
+VERBOSE = False
 
 def build_put_nature(nature, description):
     return {
@@ -23,7 +23,6 @@ def parse_nature(row):
     return build_put_nature(row[0], row[1])
 
 def build_put_pokemon(pokemon):
-    print pokemon
     return {
         'PutRequest': {
             'Item': {
@@ -46,7 +45,7 @@ def write_batch(client, table, items, batch):
     request_items[table] = items
     if ONLINE is True:
         client.batch_write_item(RequestItems = request_items)
-    if REQUEST is True:
+    if VERBOSE is True:
         print(request_items)
 
 def upload(client, table, csv_location, parse):
@@ -69,11 +68,15 @@ def upload(client, table, csv_location, parse):
     write_batch(client, table, items, batch)
 
 def run():
+
+    with open('../../access/aws-sdk_config.json') as access_file:
+        access_data = json.load(access_file)
+
     client = boto3.client(
         'dynamodb',
-        region_name='us-east-1',
-        aws_access_key_id=keys.aws_access_key_id,
-        aws_secret_access_key=keys.aws_secret_access_key
+        region_name = access_data['region'],
+        aws_access_key_id = access_data['accessKeyId'],
+        aws_secret_access_key = access_data['secretAccessKey']
     )
 
     #upload(client, 'EliteFour-Natures', '../../../data/natures.csv', parse_nature)

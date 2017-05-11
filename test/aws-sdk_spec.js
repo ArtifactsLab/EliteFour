@@ -11,7 +11,7 @@ describe('import logic', () => {
     });
 
     it('configures from file', () => {
-      AWS.config.loadFromPath('test/test_config.json');
+      AWS.config.loadFromPath('test/aws-sdk_config.json');
 
       expect(AWS.config.credentials.accessKeyId).to.equal('123');
       // secretAccessKey seems hidden ...
