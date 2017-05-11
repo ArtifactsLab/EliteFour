@@ -1,8 +1,21 @@
-var lambda = require('./lambda.js');
+var lambda = require('./eliteFourLambda.js');
 console.log(lambda);
 
 const event = {
-
+  session: {
+    application: {
+      applicationId: "application1"
+    },
+    new: false,
+    sessionId: "session1"
+  },
+  request: {
+    type: "IntentRequest",
+    requestId: "request1",
+    intent: {
+      name: ""
+    }
+  }
 }
 
 const callback = (err, res) => {

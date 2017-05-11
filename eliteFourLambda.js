@@ -101,12 +101,7 @@ function onIntent(intentRequest, session, callback) {
     const intent = intentRequest.intent;
     const intentName = intentRequest.intent.name;
 
-    // Dispatch to your skill's intent handlers
-    if (intentName === 'MyColorIsIntent') {
-        setColorInSession(intent, session, callback);
-    } else if (intentName === 'WhatsMyColorIntent') {
-        getColorFromSession(intent, session, callback);
-    } else if (intentName === 'AMAZON.HelpIntent') {
+    if (intentName === 'AMAZON.HelpIntent') {
         getWelcomeResponse(callback);
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
         handleSessionEndRequest(callback);
