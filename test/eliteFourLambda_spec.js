@@ -34,15 +34,20 @@ describe('EliteFour lambda', () => {
       });
     });
 
-    // TODO test the AMAZON.* intents output (pull strings from exports.message)
     it('handles AMAZON.HelpIntent', () => {
       event.request.intent.name = 'AMAZON.HelpIntent';
       lambda.handler(event, null, (err, res) => {
         expect(err).to.be.null;
-        expect(res).to.be.defined;
+        expect(
+          res.response.outputSpeech.text
+        ).to.equal(lambda.messages.welcome);
+        expect(
+          res.response.reprompt.outputSpeech.text
+        ).to.equal(lambda.messages.welcomeReprompt);
       });
     });
 
+    // TODO
     it('handles AMAZON.StopIntent', () => {
       event.request.intent.name = 'AMAZON.StopIntent';
       lambda.handler(event, null, (err, res) => {
@@ -51,6 +56,7 @@ describe('EliteFour lambda', () => {
       });
     });
 
+    // TODO
     it('handles AMAZON.CancelIntent', () => {
       event.request.intent.name = 'AMAZON.CancelIntent';
       lambda.handler(event, null, (err, res) => {

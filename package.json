@@ -5,7 +5,8 @@
   "main": "sample.js",
   "scripts": {
     "start": "node sample.js",
-    "test": "./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report text --recursive test",
+    "test:cover": "./node_modules/.bin/babel-node node_modules/.bin/babel-istanbul cover node_modules/.bin/_mocha --report text --recursive test",
+    "test": "./node_modules/.bin/babel-node node_modules/.bin/_mocha --recursive test",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
