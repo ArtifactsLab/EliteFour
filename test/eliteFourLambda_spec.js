@@ -47,21 +47,29 @@ describe('EliteFour lambda', () => {
       });
     });
 
-    // TODO
     it('handles AMAZON.StopIntent', () => {
       event.request.intent.name = 'AMAZON.StopIntent';
       lambda.handler(event, null, (err, res) => {
         expect(err).to.be.null;
-        expect(res).to.be.defined;
+        expect(
+          res.response.outputSpeech.text
+        ).to.equal(lambda.messages.stop);
+        expect(
+          res.response.reprompt.outputSpeech.text
+        ).to.be.null;
       });
     });
 
-    // TODO
     it('handles AMAZON.CancelIntent', () => {
       event.request.intent.name = 'AMAZON.CancelIntent';
       lambda.handler(event, null, (err, res) => {
         expect(err).to.be.null;
-        expect(res).to.be.defined;
+        expect(
+          res.response.outputSpeech.text
+        ).to.equal(lambda.messages.stop);
+        expect(
+          res.response.reprompt.outputSpeech.text
+        ).to.be.null;
       });
     });
 

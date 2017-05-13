@@ -111,3 +111,6 @@ scripts/python/access
 
 # node
 node_modules/
+
+# tests
+coverage/

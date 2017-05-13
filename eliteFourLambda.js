@@ -2,7 +2,8 @@
 
 const messages = {
   welcome: 'Welcome to the Elite Four, feel free to ask a question about Pokemon',
-  welcomeReprompt: 'Feel free to ask a question about Pokemon'
+  welcomeReprompt: 'Feel free to ask a question about Pokemon',
+  stop: 'Thank you for using Elite Four'
 };
 
 exports.messages = messages;
@@ -41,6 +42,7 @@ function getWelcomeResponse(callback) {
     const sessionAttributes = {};
     const cardTitle = 'Welcome';
     const speechOutput = messages.welcome;
+
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
     const repromptText = messages.welcomeReprompt;
@@ -52,17 +54,12 @@ function getWelcomeResponse(callback) {
 
 function handleSessionEndRequest(callback) {
     const cardTitle = 'Session Ended';
-    const speechOutput = 'Thank you for trying the Alexa Skills Kit sample. Have a nice day!';
+    const speechOutput = messages.stop;
+
     // Setting this to true ends the session and exits the skill.
     const shouldEndSession = true;
 
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
-}
-
-function createFavoriteColorAttributes(favoriteColor) {
-    return {
-        favoriteColor,
-    };
 }
 
 function getPokemonStats(intent, callback) {
